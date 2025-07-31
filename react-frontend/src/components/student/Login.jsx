@@ -20,11 +20,11 @@ const formSchema = z.object({
     password: z
         .string()
         .min(8, "Password must be at least 8 characters long")
-        .max(100, "Password cannot exceed 100 characters")
-        .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-        .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-        .regex(/[0-9]/, "Password must contain at least one number")
-        .regex(/[\W_]/, "Password must contain at least one special character"),
+        .max(100, "Password cannot exceed 100 characters"),
+    // .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    // .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    // .regex(/[0-9]/, "Password must contain at least one number")
+    // .regex(/[\W_]/, "Password must contain at least one special character"),
 });
 
 function Login() {
@@ -32,15 +32,30 @@ function Login() {
         resolver: zodResolver(formSchema),
         defaultValues: {
             email: "student@school.com",
-            password: "1234Azer@@",
+            password: "password",
         },
     });
 
-    // 2. Define a submit handler.
-    async function onSubmit (values) {
-       const axios = axiosClient;
-       const res = await axios.post("/login", values)
+    function getCookie(name) {
+        const match = document.cookie.match(
+            new RegExp("(^| )" + name + "=([^;]+)")
+        );
+        if (match) return decodeURIComponent(match[2]);
+        return null;
+    }
 
+    async function onSubmit(values) {
+        try {
+            await axiosClient.get("/sanctum/csrf-cookie");
+            const csrfToken = getCookie("XSRF-TOKEN");
+            await axiosClient.post("/login", values, {
+                headers: {
+                    "X-XSRF-TOKEN": csrfToken,
+                },
+            });
+        } catch (err) {
+            console.error(err?.response?.data?.message ?? err.message);
+        }
     }
     return (
         <>
