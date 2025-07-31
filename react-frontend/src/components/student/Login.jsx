@@ -13,6 +13,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { axiosClient } from "../../api/axios";
 
 const formSchema = z.object({
     email: z.email("Invalid email address"),
@@ -30,16 +31,16 @@ function Login() {
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            email: "",
-            password: "",
+            email: "student@school.com",
+            password: "1234Azer@@",
         },
     });
 
     // 2. Define a submit handler.
-    function onSubmit(values) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values);
+    async function onSubmit (values) {
+       const axios = axiosClient;
+       const res = await axios.post("/login", values)
+
     }
     return (
         <>
@@ -55,27 +56,29 @@ function Login() {
                             <FormItem>
                                 <FormLabel>Email</FormLabel>
                                 <FormControl>
-                                    <Input type="text" placeholder="Your email" {...field} />
+                                    <Input
+                                        type="text"
+                                        placeholder="student@school.com"
+                                        {...field}
+                                    />
                                 </FormControl>
-                                <FormDescription>
-                                    This is your school email.
-                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-                      <FormField
+                    <FormField
                         control={form.control}
                         name="password"
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Password</FormLabel>
                                 <FormControl>
-                                    <Input type="password" placeholder="Your password" {...field} />
+                                    <Input
+                                        type="password"
+                                        placeholder="********"
+                                        {...field}
+                                    />
                                 </FormControl>
-                                <FormDescription>
-                                    This is your secret password.
-                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}

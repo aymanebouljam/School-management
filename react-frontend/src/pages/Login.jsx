@@ -5,7 +5,7 @@ import StudentLogin from "../components/student/Login";
 function Login() {
     return (
         <>
-            <h1 className="text-2xl">Student Login</h1>
+            <h1 className="text-2xl mb-4">Student Login</h1>
             <StudentLogin />
         </>
     );
