@@ -1,11 +1,13 @@
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router/index";
-import { Button } from "@/components/ui/button";
+import UserContext from "./context/UserContext";
 
 function App() {
     return (
         <>
-            <RouterProvider router={router} />
+            <UserContext>
+                <RouterProvider router={router} />
+            </UserContext>
         </>
     );
 }
