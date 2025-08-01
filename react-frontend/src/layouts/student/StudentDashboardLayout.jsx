@@ -8,6 +8,7 @@ import { Loader } from "lucide-react";
 function StudentDashboardLayout() {
     const [loading, setLoading] = useState(true);
     const [isAuth, setIsAuth] = useState(true);
+    const[user, setUser] = useState(null);
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -16,6 +17,8 @@ function StudentDashboardLayout() {
                 if (!res) {
                     setIsAuth(false);
                     navigate("/login");
+                }else{
+                    setUser(res)
                 }
             })
             .catch((err) => {
@@ -26,6 +29,7 @@ function StudentDashboardLayout() {
             .finally(() => setLoading(false));
     }, [navigate]);
 
+
     return loading ? (
         <div className="min-h-screen flex items-center justify-center">
             <Loader className="h-16 w-16 animate-spin" />
@@ -35,7 +39,7 @@ function StudentDashboardLayout() {
             <Navbar isAuth={isAuth} />
 
             <main className="mx-auto max-w-screen-lg p-4">
-                <Outlet />
+                <Outlet context={{user}} />
             </main>
         </>
     );
