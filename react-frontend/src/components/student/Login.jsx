@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -14,6 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { axiosClient } from "../../api/axios";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
     email: z.email("Invalid email address"),
@@ -36,6 +36,7 @@ function Login() {
         },
     });
 
+    const navigate = useNavigate();
     function getCookie(name) {
         const match = document.cookie.match(
             new RegExp("(^| )" + name + "=([^;]+)")
@@ -46,13 +47,16 @@ function Login() {
 
     async function onSubmit(values) {
         try {
-            await axiosClient.get("/sanctum/csrf-cookie");
+            await axiosClient.get("sanctum/csrf-cookie");
+
             const csrfToken = getCookie("XSRF-TOKEN");
-            await axiosClient.post("/login", values, {
+            await axiosClient.post("login", values, {
                 headers: {
                     "X-XSRF-TOKEN": csrfToken,
+                    Accept: "application/json",
                 },
             });
+            navigate("/student/dashboard");
         } catch (err) {
             console.error(err?.response?.data?.message ?? err.message);
         }

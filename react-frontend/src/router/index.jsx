@@ -4,6 +4,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Users from "../pages/Users";
 import NotFound from "../pages/NotFound";
+import Dashboard from "../pages/Dashboard";
 import Layout from "../layouts/Layout";
 
 export const router = createBrowserRouter([
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
             {
                 path: "/register",
                 element: <Register />,
+            },
+            {
+                path: "/student/dashboard",
+                element: <Dashboard />,
             },
             {
                 path: "/users",
