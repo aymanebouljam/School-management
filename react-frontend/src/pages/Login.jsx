@@ -1,6 +1,6 @@
 import React from "react";
 
-import StudentLogin from "../components/student/Login";
+import StudentLogin from "./student/Login";
 
 function Login() {
     return (

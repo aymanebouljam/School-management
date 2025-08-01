@@ -58,7 +58,12 @@ function Login() {
             });
             navigate("/student/dashboard");
         } catch (err) {
-            console.error(err?.response?.data?.message ?? err.message);
+            const error =
+                err?.response?.data?.message ??
+                err.message ??
+                "Something went wrong";
+            form.setError("email", { message: error });
+            console.error(error);
         }
     }
     return (

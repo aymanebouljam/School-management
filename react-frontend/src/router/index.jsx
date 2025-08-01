@@ -4,8 +4,10 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Users from "../pages/Users";
 import NotFound from "../pages/NotFound";
-import Dashboard from "../pages/Dashboard";
+import Dashboard from "../pages/student/Dashboard";
 import Layout from "../layouts/Layout";
+import GuestLayout from "../layouts/GuestLayout";
+import StudentDashboardLayout from "../layouts/student/StudentDashboardLayout";
 
 export const router = createBrowserRouter([
     {
@@ -16,6 +18,19 @@ export const router = createBrowserRouter([
                 element: <Home />,
             },
             {
+                path: "/users",
+                element: <Users />,
+            },
+            {
+                path: "*",
+                element: <NotFound />,
+            },
+        ],
+    },
+    {
+        element: <GuestLayout />,
+        children: [
+            {
                 path: "/login",
                 element: <Login />,
             },
@@ -23,17 +38,14 @@ export const router = createBrowserRouter([
                 path: "/register",
                 element: <Register />,
             },
+        ],
+    },
+    {
+        element: <StudentDashboardLayout />,
+        children: [
             {
                 path: "/student/dashboard",
                 element: <Dashboard />,
-            },
-            {
-                path: "/users",
-                element: <Users />,
-            },
-            {
-                path: "*",
-                element: <NotFound />,
             },
         ],
     },
