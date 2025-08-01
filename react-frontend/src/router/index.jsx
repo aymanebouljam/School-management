@@ -8,6 +8,7 @@ import Dashboard from "../pages/student/Dashboard";
 import Layout from "../layouts/Layout";
 import GuestLayout from "../layouts/GuestLayout";
 import StudentDashboardLayout from "../layouts/student/StudentDashboardLayout";
+import Logout from "../pages/student/Logout";
 
 export const router = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
             {
                 path: "/student/dashboard",
                 element: <Dashboard />,
+            },
+            {
+                path: "/logout",
+                element: <Logout />,
             },
         ],
     },
