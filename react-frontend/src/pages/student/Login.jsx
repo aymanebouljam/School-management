@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { axiosClient } from "../../api/axios";
 import { useNavigate } from "react-router-dom";
+import { getCookie } from "../../api/auth";
 
 const formSchema = z.object({
     email: z.email("Invalid email address"),
@@ -37,13 +38,7 @@ function Login() {
     });
 
     const navigate = useNavigate();
-    function getCookie(name) {
-        const match = document.cookie.match(
-            new RegExp("(^| )" + name + "=([^;]+)")
-        );
-        if (match) return decodeURIComponent(match[2]);
-        return null;
-    }
+   
 
     async function onSubmit(values) {
         try {
